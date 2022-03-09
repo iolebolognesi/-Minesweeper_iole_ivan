@@ -65,7 +65,7 @@ public class Minesweeper extends AbstractMineSweeper
             {
                 if(board[i][j].getIsExplosive())
                 {
-                    
+
                 }
                 else
                 {
@@ -83,7 +83,33 @@ public class Minesweeper extends AbstractMineSweeper
         this.rows = row;
         this.columns = col;
         this.nrExplosions = explosionCount;
-        board = new int[rows][columns];
+        board = new Tile[rows][columns];
+        board = new Tile[rows][columns];
+        rd = new Random();
+        for(int i =0; i<=nrExplosions; i++)
+        {
+            int randomIndexRows = rd.nextInt(rows);
+            int randomIndexColumns = rd.nextInt(columns);
+            board[randomIndexRows][randomIndexColumns]= new ExplosiveTile();
+            board[randomIndexRows][randomIndexColumns].setIsExplosive(true);
+        }
+
+        for(int i=0; i< board.length; i++)
+        {
+            for(int j=0; i< board[i].length; j++)
+            {
+                if(board[i][j].getIsExplosive())
+                {
+
+                }
+                else
+                {
+                    board[i][j] =new EmptyTile();
+                }
+
+            }
+
+        }
 
     }
 
