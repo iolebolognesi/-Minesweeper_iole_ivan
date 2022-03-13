@@ -1,4 +1,5 @@
 package model;
+//import java.lang.reflect.Array;
 import java.util.Random;
 
 public class Minesweeper extends AbstractMineSweeper
@@ -6,7 +7,7 @@ public class Minesweeper extends AbstractMineSweeper
     protected int columns;
     protected int rows;
     protected int nrExplosions;
-    protected Tile[][] board;
+    protected AbstractTile[][] board;
     protected Random rd;
 
 
@@ -49,7 +50,23 @@ public class Minesweeper extends AbstractMineSweeper
             this.nrExplosions =99;
         }
 
-        board = new Tile[rows][columns];
+        board = new AbstractTile[rows][columns];
+        for(int i=0; i< board.length; i++)
+        {
+            for(int j=0; j< board[i].length; j++)
+            {
+               /* if(board[i][j].getIsExplosive())
+                {
+
+                }
+                else
+                {
+                    board[i][j] =new EmptyTile();
+                }*/
+                board[i][j] =new EmptyTile();
+            }
+
+        }
         rd = new Random();
         for(int i =0; i<=nrExplosions; i++)
         {
@@ -59,7 +76,7 @@ public class Minesweeper extends AbstractMineSweeper
           board[randomIndexRows][randomIndexColumns].setIsExplosive(true);
         }
 
-        for(int i=0; i< board.length; i++)
+        /*for(int i=0; i< board.length; i++)
         {
             for(int j=0; i< board[i].length; j++)
             {
@@ -74,7 +91,7 @@ public class Minesweeper extends AbstractMineSweeper
 
             }
 
-        }
+        }*/
     }
 
     @Override
@@ -83,8 +100,24 @@ public class Minesweeper extends AbstractMineSweeper
         this.rows = row;
         this.columns = col;
         this.nrExplosions = explosionCount;
-        board = new Tile[rows][columns];
-        board = new Tile[rows][columns];
+        //board = new Tile[rows][columns];
+        board = new AbstractTile[rows][columns];
+        for(int i=0; i< board.length; i++)
+        {
+            for(int j=0; j< board[i].length; j++)
+            {
+               /* if(board[i][j].getIsExplosive())
+                {
+
+                }
+                else
+                {
+                    board[i][j] =new EmptyTile();
+                }*/
+                board[i][j] =new EmptyTile();
+            }
+
+        }
         rd = new Random();
         for(int i =0; i<=nrExplosions; i++)
         {
@@ -94,22 +127,7 @@ public class Minesweeper extends AbstractMineSweeper
             board[randomIndexRows][randomIndexColumns].setIsExplosive(true);
         }
 
-        for(int i=0; i< board.length; i++)
-        {
-            for(int j=0; i< board[i].length; j++)
-            {
-                if(board[i][j].getIsExplosive())
-                {
 
-                }
-                else
-                {
-                    board[i][j] =new EmptyTile();
-                }
-
-            }
-
-        }
 
     }
 
@@ -121,12 +139,15 @@ public class Minesweeper extends AbstractMineSweeper
     @Override
     public AbstractTile getTile(int x, int y)
     {
-        return null;
+
+
+        return board[y][x];
+
     }
 
     @Override
     public void setWorld(AbstractTile[][] world) {
-
+        board =  world;
     }
 
     @Override
@@ -136,12 +157,12 @@ public class Minesweeper extends AbstractMineSweeper
 
     @Override
     public void flag(int x, int y) {
-
+      board[y][x].setIsFlagged(true);
     }
 
     @Override
     public void unflag(int x, int y) {
-
+        board[y][x].setIsFlagged(false);
     }
 
     @Override

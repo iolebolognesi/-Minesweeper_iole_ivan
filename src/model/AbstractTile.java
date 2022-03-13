@@ -16,4 +16,7 @@ public abstract class AbstractTile implements TestableTile
     }
 
 
+    public abstract void setIsExplosive(boolean b);
+
+    public abstract void setIsFlagged(boolean b);
 }

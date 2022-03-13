@@ -4,6 +4,8 @@ public class Tile extends AbstractTile
 
 {
     protected boolean isExplosive;
+    protected boolean isFlagged;
+
 
     public boolean getIsExplosive()
     {
@@ -13,6 +15,10 @@ public class Tile extends AbstractTile
     public void setIsExplosive(boolean a )
     {
         this.isExplosive = a;
+    }
+    public void setIsFlagged(boolean a )
+    {
+        this.isFlagged = a;
     }
 
 
@@ -33,12 +39,14 @@ public class Tile extends AbstractTile
 
     @Override
     public boolean isFlagged() {
-        return false;
+
+        return isFlagged;
     }
 
     @Override
     public boolean isExplosive() {
-        return false;
+
+        return isExplosive;
     }
 
     @Override
