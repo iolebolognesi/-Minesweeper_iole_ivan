@@ -7,6 +7,7 @@ public class Minesweeper extends AbstractMineSweeper
     protected int columns;
     protected int rows;
     protected int nrExplosions;
+    protected int explosionsTotal;
     protected AbstractTile[][] board;
     protected Random rd;
 
@@ -25,53 +26,61 @@ public class Minesweeper extends AbstractMineSweeper
     }
 
     @Override
-    public void startNewGame(Difficulty level)
-    {
-        if (level == Difficulty.EASY)
-        {
+    public void startNewGame(Difficulty level) {
+
+        this.nrExplosions=0;
+        if (level == Difficulty.EASY) {
             this.rows = 8;
             this.columns = 8;
-            this.nrExplosions =10;
-        }
-        else if(level == Difficulty.MEDIUM)
-        {
+            this.explosionsTotal = 10;
+        } else if (level == Difficulty.MEDIUM) {
             this.rows = 16;
             this.columns = 16;
-            this.nrExplosions =40;
-        }
-
-        else
-        {
+            this.explosionsTotal = 40;
+        } else {
             this.rows = 16;
-            this.columns =30;
-            this.nrExplosions =99;
+            this.columns = 30;
+            this.explosionsTotal = 99;
         }
 
         board = new AbstractTile[rows][columns];
-        for(int i=0; i< board.length; i++)
-        {
-            for(int j=0; j< board[i].length; j++)
-            {
-               /* if(board[i][j].getIsExplosive())
-                {
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[i].length; j++) {
+                board[i][j] = new EmptyTile();
 
-                }
-                else
-                {
-                    board[i][j] =new EmptyTile();
-                }*/
-                board[i][j] =new EmptyTile();
             }
 
         }
+
+
         rd = new Random();
-        for(int i =0; i<=nrExplosions; i++)
-        {
-          int randomIndexRows = rd.nextInt(rows);
-          int randomIndexColumns = rd.nextInt(columns);
-          board[randomIndexRows][randomIndexColumns]= new ExplosiveTile();
-          board[randomIndexRows][randomIndexColumns].setIsExplosive(true);
+        for (int i = 0; i <= explosionsTotal; i++) {
+
+            if (explosionsTotal == 0)
+            {
+
+            }
+            else
+            {
+            int randomIndexRows = rd.nextInt(rows);
+            int randomIndexColumns = rd.nextInt(columns);
+
+            if (board[randomIndexRows][randomIndexColumns].getIsExplosive())
+            {
+                startNewGame(level);
+
+            }
+            else
+            {
+                board[randomIndexRows][randomIndexColumns] = new ExplosiveTile();
+                board[randomIndexRows][randomIndexColumns].setIsExplosive(true);
+                nrExplosions= nrExplosions+ 1;
+
+            }
+            }
         }
+
+    }
 
         /*for(int i=0; i< board.length; i++)
         {
@@ -89,43 +98,46 @@ public class Minesweeper extends AbstractMineSweeper
             }
 
         }*/
-    }
+
 
     @Override
-    public void startNewGame(int row, int col, int explosionCount)
-    {
+    public void startNewGame(int row, int col, int explosionCount) {
         this.rows = row;
         this.columns = col;
-        this.nrExplosions = explosionCount;
-        //board = new Tile[rows][columns];
+        this.explosionsTotal= explosionCount;
+        this.nrExplosions = 0;
         board = new AbstractTile[rows][columns];
-        for(int i=0; i< board.length; i++)
-        {
-            for(int j=0; j< board[i].length; j++)
-            {
-               /* if(board[i][j].getIsExplosive())
-                {
-
-                }
-                else
-                {
-                    board[i][j] =new EmptyTile();
-                }*/
-                board[i][j] =new EmptyTile();
+        for (int i = 0; i < board.length; i++) {
+            for (int j = 0; j < board[i].length; j++) {
+                board[i][j] = new EmptyTile();
             }
 
         }
         rd = new Random();
-        for(int i =0; i<=nrExplosions; i++)
-        {
-            int randomIndexRows = rd.nextInt(rows);
-            int randomIndexColumns = rd.nextInt(columns);
-            board[randomIndexRows][randomIndexColumns]= new ExplosiveTile();
-            board[randomIndexRows][randomIndexColumns].setIsExplosive(true);
+        for (int i = 0; i <= explosionsTotal; i++) {
+            if (explosionsTotal == 0)
+            {
+
+            }
+            else {
+                int randomIndexRows = rd.nextInt(rows);
+                int randomIndexColumns = rd.nextInt(columns);
+
+                if (board[randomIndexRows][randomIndexColumns].getIsExplosive())
+                {
+                    startNewGame(rows, columns, explosionCount);
+
+                }
+                else
+                {
+                    board[randomIndexRows][randomIndexColumns] = new ExplosiveTile();
+                    board[randomIndexRows][randomIndexColumns].setIsExplosive(true);
+                    nrExplosions= nrExplosions+ 1;
+                }
+            }
+
+
         }
-
-
-
     }
 
     @Override
@@ -147,8 +159,19 @@ public class Minesweeper extends AbstractMineSweeper
     @Override
     public AbstractTile getTile(int x, int y)
     {
+        try
+        {
 
-        return board[y][x];
+
+                return board[y][x];
+
+        }
+        catch (IndexOutOfBoundsException e)
+        {
+            return null;
+
+        }
+
 
     }
 
