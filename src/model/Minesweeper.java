@@ -67,7 +67,7 @@ public class Minesweeper extends AbstractMineSweeper
 
             if (board[randomIndexRows][randomIndexColumns].getIsExplosive())
             {
-                startNewGame(level);
+                i=i-1;
 
             }
             else
@@ -125,7 +125,7 @@ public class Minesweeper extends AbstractMineSweeper
 
                 if (board[randomIndexRows][randomIndexColumns].getIsExplosive())
                 {
-                    startNewGame(rows, columns, explosionCount);
+                    i=i-1;
 
                 }
                 else
