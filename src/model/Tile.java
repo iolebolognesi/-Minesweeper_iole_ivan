@@ -16,24 +16,29 @@ public class Tile extends AbstractTile
     {
         this.isExplosive = a;
     }
+
     public void setIsFlagged(boolean a )
     {
         this.isFlagged = a;
     }
 
-
     @Override
-    public boolean open() {
+    public boolean open()
+    {
         return false;
     }
 
     @Override
-    public void flag() {
+    public void flag()
+    {
+        this.isFlagged= true;
 
     }
 
     @Override
-    public void unflag() {
+    public void unflag()
+    {
+        this.isFlagged= false;
 
     }
 
@@ -50,7 +55,8 @@ public class Tile extends AbstractTile
     }
 
     @Override
-    public boolean isOpened() {
+    public boolean isOpened()
+    {
         return false;
     }
 }

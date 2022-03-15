@@ -13,16 +13,13 @@ public class Minesweeper extends AbstractMineSweeper
 
 
     @Override
-    public int getWidth() {
-
-
-
+    public int getWidth()
+    {
         return columns;
     }
 
     @Override
     public int getHeight()
-
     {
         return rows;
     }
@@ -132,7 +129,18 @@ public class Minesweeper extends AbstractMineSweeper
     }
 
     @Override
-    public void toggleFlag(int x, int y) {
+    public void toggleFlag(int x, int y)
+    {
+        AbstractTile tile = board[y][x];
+        if(tile.isFlagged())
+        {
+            tile.setIsFlagged(false);
+        }
+        else
+        {
+            tile.setIsFlagged(true);
+        }
+
 
     }
 
@@ -140,33 +148,37 @@ public class Minesweeper extends AbstractMineSweeper
     public AbstractTile getTile(int x, int y)
     {
 
-
         return board[y][x];
 
     }
 
     @Override
-    public void setWorld(AbstractTile[][] world) {
+    public void setWorld(AbstractTile[][] world)
+    {
         board =  world;
     }
 
     @Override
-    public void open(int x, int y) {
+    public void open(int x, int y)
+    {
 
     }
 
     @Override
-    public void flag(int x, int y) {
+    public void flag(int x, int y)
+    {
       board[y][x].setIsFlagged(true);
     }
 
     @Override
-    public void unflag(int x, int y) {
+    public void unflag(int x, int y)
+    {
         board[y][x].setIsFlagged(false);
     }
 
     @Override
-    public void deactivateFirstTileRule() {
+    public void deactivateFirstTileRule()
+    {
 
     }
 
@@ -179,7 +191,9 @@ public class Minesweeper extends AbstractMineSweeper
     }
 
     @Override
-    public AbstractTile generateExplosiveTile() {
-        return null;
+    public AbstractTile generateExplosiveTile()
+    {
+        ExplosiveTile newTile = new ExplosiveTile();
+        return newTile;
     }
 }

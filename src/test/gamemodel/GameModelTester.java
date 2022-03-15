@@ -37,7 +37,8 @@ public class GameModelTester {
 
         tile.setTileNotifier(new MockTileStateNotifier() {
             @Override
-            public void notifyOpened(int explosiveNeighbourCount) {
+            public void notifyOpened(int explosiveNeighbourCount)
+            {
                 assertTrue(explosiveNeighbourCount >= 0);
                 super.setInvoked();
             }
@@ -50,7 +51,8 @@ public class GameModelTester {
         TestableTile tile = gameModel.generateEmptyTile();
         assertNotNull(tile);
 
-        tile.setTileNotifier(new MockTileStateNotifier() {
+        tile.setTileNotifier(new MockTileStateNotifier()
+        {
             @Override
             public void notifyExplode() {
                 assertTrue(true);
@@ -235,21 +237,24 @@ public class GameModelTester {
         int[] target = new int[] {1,1};
         gameModel.setGameStateNotifier(new MockGameStateNotifier() {
             @Override
-            public void notifyNewGame(int row, int col) {
+            public void notifyNewGame(int row, int col)
+            {
                 assertEquals(row, size);
                 assertEquals(col, size);
                 super.setInvoked();
             }
 
             @Override
-            public void notifyFlagCountChanged(int newFlagCount) {
+            public void notifyFlagCountChanged(int newFlagCount)
+            {
                 assertEquals(newFlagCount, testStepCounter);
                 super.setInvoked();
             }
 
             int testStepCounter = 0;
             @Override
-            public void notifyFlagged(int x, int y) {
+            public void notifyFlagged(int x, int y)
+            {
                 assertEquals(x, target[0]);
                 assertEquals(y, target[1]);
                 ++testStepCounter;
@@ -457,9 +462,11 @@ public class GameModelTester {
     }
 
     @Test
-    public void testAddressingTile() {
+    public void testAddressingTile()
+    {
         final int size = 2;
-        gameModel.setGameStateNotifier(new MockGameStateNotifier() {
+        gameModel.setGameStateNotifier(new MockGameStateNotifier()
+        {
             @Override
             public void notifyNewGame(int row, int col) {
                 super.setInvoked();
