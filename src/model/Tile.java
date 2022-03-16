@@ -26,7 +26,8 @@ public class Tile extends AbstractTile
     @Override
     public boolean open()
     {
-       return this.wasOpened= true;
+        return this.wasOpened= true;
+
     }
 
     @Override
