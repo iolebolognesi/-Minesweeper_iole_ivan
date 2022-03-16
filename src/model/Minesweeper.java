@@ -119,39 +119,37 @@ public class Minesweeper extends AbstractMineSweeper
     @Override
     public void open(int x, int y)
     {
+        if(x< board[0].length && y< board.length && x>=0 && y>=0) {
 
-        board[y][x].isOpened();
+            board[y][x].isOpened();
 
-        boolean check= false;
-        if(isFirsttile)
-        {
-            isFirsttile=false;
-            board[y][x].open();
+            boolean check = false;
+            if (isFirsttile) {
+                isFirsttile = false;
+                board[y][x].open();
 
-            if(board[y][x].getIsExplosive())
-            {
-                board[y][x]= new EmptyTile();
-                board[y][x].setIsExplosive(false);
-                rd = new Random();
-                while(!check)
-                {
-                    int randomIndexRows = rd.nextInt(board.length);
-                    int randomIndexColumns = rd.nextInt(board[0].length);
-                    if (randomIndexRows != y && randomIndexColumns != x && !board[randomIndexRows][randomIndexColumns].isExplosive())
-                    {
-                        check=true;
-                        board[randomIndexRows][randomIndexColumns] = new ExplosiveTile();
-                        board[randomIndexRows][randomIndexColumns].setIsExplosive(true);
+                if (board[y][x].getIsExplosive()) {
+                    board[y][x] = new EmptyTile();
+                    board[y][x].setIsExplosive(false);
+                    rd = new Random();
+                    while (!check) {
+                        int randomIndexRows = rd.nextInt(board.length);
+                        int randomIndexColumns = rd.nextInt(board[0].length);
+                        if (randomIndexRows != y && randomIndexColumns != x && !board[randomIndexRows][randomIndexColumns].isExplosive()) {
+                            check = true;
+                            board[randomIndexRows][randomIndexColumns] = new ExplosiveTile();
+                            board[randomIndexRows][randomIndexColumns].setIsExplosive(true);
+                        }
+
                     }
-
                 }
-            }
 
+            } else {
+                board[y][x].open();
+            }
         }
-        else
-        {
-            board[y][x].open();
-        }
+
+        else{}
 
 
     }
