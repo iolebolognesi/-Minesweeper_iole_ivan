@@ -168,9 +168,10 @@ public class Minesweeper extends AbstractMineSweeper
             {
                 board[y][x]= new EmptyTile();
                 board[y][x].setIsExplosive(false);
+                rd = new Random();
                 while(!check)
                 {
-                    rd = new Random();
+
                     int randomIndexRows = rd.nextInt(rows);
                     int randomIndexColumns = rd.nextInt(columns);
                     if (randomIndexRows != y && randomIndexColumns != x && !board[randomIndexRows][randomIndexColumns].isExplosive())
@@ -179,6 +180,8 @@ public class Minesweeper extends AbstractMineSweeper
                         board[randomIndexRows][randomIndexColumns] = new ExplosiveTile();
                         board[randomIndexRows][randomIndexColumns].setIsExplosive(true);
                     }
+                    else
+                    {}
 
                 }
             }
