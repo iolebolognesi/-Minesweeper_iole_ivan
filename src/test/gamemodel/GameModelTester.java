@@ -74,6 +74,7 @@ public class GameModelTester {
                 super.setInvoked();
             }           
         });
+
         gameModel.startNewGame(h, w, 4);
         assertEquals(gameModel.getHeight(), h);
         assertEquals(gameModel.getWidth(), w);

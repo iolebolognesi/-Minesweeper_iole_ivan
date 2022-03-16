@@ -5,6 +5,7 @@ import java.util.Random;
 public class Minesweeper extends AbstractMineSweeper
 {
     protected int columns;
+    protected boolean isFirsttile;
     protected int rows;
     protected int nrExplosions;
     protected int explosionsTotal;
@@ -27,7 +28,7 @@ public class Minesweeper extends AbstractMineSweeper
 
     @Override
     public void startNewGame(Difficulty level) {
-
+        deactivateFirstTileRule();
         this.nrExplosions=0;
         if (level == Difficulty.EASY) {
             this.rows = 8;
@@ -77,26 +78,11 @@ public class Minesweeper extends AbstractMineSweeper
 
     }
 
-        /*for(int i=0; i< board.length; i++)
-        {
-            for(int j=0; i< board[i].length; j++)
-            {
-                if(board[i][j].getIsExplosive())
-                {
-
-                }
-                else
-                {
-                    board[i][j] =new EmptyTile();
-                }
-
-            }
-
-        }*/
 
 
     @Override
     public void startNewGame(int row, int col, int explosionCount) {
+        deactivateFirstTileRule();
         this.rows = row;
         this.columns = col;
         this.explosionsTotal= explosionCount;
@@ -152,10 +138,7 @@ public class Minesweeper extends AbstractMineSweeper
     {
         try
         {
-
-
-                return board[y][x];
-
+            return board[y][x];
         }
         catch (IndexOutOfBoundsException e)
         {
@@ -175,6 +158,36 @@ public class Minesweeper extends AbstractMineSweeper
     @Override
     public void open(int x, int y)
     {
+        boolean check= false;
+        if(isFirsttile)
+        {
+            isFirsttile=false;
+            board[y][x].open();
+
+            if(board[y][x].getIsExplosive())
+            {
+                board[y][x]= new EmptyTile();
+                board[y][x].setIsExplosive(false);
+                while(!check)
+                {
+                    rd = new Random();
+                    int randomIndexRows = rd.nextInt(rows);
+                    int randomIndexColumns = rd.nextInt(columns);
+                    if (randomIndexRows != y && randomIndexColumns != x && !board[randomIndexRows][randomIndexColumns].isExplosive())
+                    {
+                        check=true;
+                        board[randomIndexRows][randomIndexColumns] = new ExplosiveTile();
+                        board[randomIndexRows][randomIndexColumns].setIsExplosive(true);
+                    }
+
+                }
+            }
+
+        }
+        else
+        {
+            board[y][x].open();
+        }
 
     }
 
@@ -193,6 +206,7 @@ public class Minesweeper extends AbstractMineSweeper
     @Override
     public void deactivateFirstTileRule()
     {
+        this.isFirsttile = true;
 
     }
 

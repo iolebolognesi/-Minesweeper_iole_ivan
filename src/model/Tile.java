@@ -5,6 +5,7 @@ public class Tile extends AbstractTile
 {
     protected boolean isExplosive;
     protected boolean isFlagged;
+    protected boolean wasOpened;
 
 
     public boolean getIsExplosive()
@@ -25,7 +26,7 @@ public class Tile extends AbstractTile
     @Override
     public boolean open()
     {
-        return false;
+       return this.wasOpened= true;
     }
 
     @Override
@@ -57,6 +58,6 @@ public class Tile extends AbstractTile
     @Override
     public boolean isOpened()
     {
-        return false;
+        return wasOpened;
     }
 }

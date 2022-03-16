@@ -19,6 +19,7 @@ import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
 import java.io.IOException;
+import java.sql.SQLException;
 import java.time.Duration;
 import java.awt.GridLayout;
 import java.awt.GridBagLayout;
@@ -36,6 +37,10 @@ public class MinesweeperView implements IGameStateNotifier {
         public static final String FLAG_ICON = "./assets/icons/flag.png";
         public static final String BOMB_ICON = "./assets/icons/bomb.png";
     }
+
+
+
+
     private PlayableMinesweeper gameModel;
     private JFrame window;
     private JMenuBar menuBar;
