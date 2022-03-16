@@ -54,14 +54,9 @@ public class Minesweeper extends AbstractMineSweeper
 
 
         rd = new Random();
-        for (int i = 0; i <= explosionsTotal; i++) {
+        for (int i = 0; i < explosionsTotal; i++) {
 
-            if (explosionsTotal == 0)
-            {
 
-            }
-            else
-            {
             int randomIndexRows = rd.nextInt(rows);
             int randomIndexColumns = rd.nextInt(columns);
 
@@ -77,7 +72,7 @@ public class Minesweeper extends AbstractMineSweeper
                 nrExplosions= nrExplosions+ 1;
 
             }
-            }
+            
         }
 
     }
@@ -114,12 +109,8 @@ public class Minesweeper extends AbstractMineSweeper
 
         }
         rd = new Random();
-        for (int i = 0; i <= explosionsTotal; i++) {
-            if (explosionsTotal == 0)
-            {
+        for (int i = 0; i < explosionsTotal; i++) {
 
-            }
-            else {
                 int randomIndexRows = rd.nextInt(rows);
                 int randomIndexColumns = rd.nextInt(columns);
 
@@ -134,7 +125,7 @@ public class Minesweeper extends AbstractMineSweeper
                     board[randomIndexRows][randomIndexColumns].setIsExplosive(true);
                     nrExplosions= nrExplosions+ 1;
                 }
-            }
+
 
 
         }
