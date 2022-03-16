@@ -2,7 +2,8 @@ package model;
 
 import notifier.IGameStateNotifier;
 
-public interface PlayableMinesweeper {
+public interface PlayableMinesweeper
+{
     int getWidth();
     int getHeight();
 
