@@ -72,7 +72,7 @@ public class Minesweeper extends AbstractMineSweeper
                 nrExplosions= nrExplosions+ 1;
 
             }
-            
+
         }
 
     }
@@ -175,7 +175,7 @@ public class Minesweeper extends AbstractMineSweeper
     @Override
     public void open(int x, int y)
     {
-
+        board[y][x].isOpened();
     }
 
     @Override
