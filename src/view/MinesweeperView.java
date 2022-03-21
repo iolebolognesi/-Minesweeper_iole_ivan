@@ -35,7 +35,7 @@ public class MinesweeperView implements IGameStateNotifier {
     public static final class AssetPath {
         public static final String CLOCK_ICON = "./assets/icons/clock.png";
         public static final String FLAG_ICON = "./assets/icons/flag.png";
-        public static final String BOMB_ICON = "./assets/icons/bomb.png";
+        public static final String BOMB_ICON = "./src/bomb3.png";
     }
 
 
@@ -139,7 +139,8 @@ public class MinesweeperView implements IGameStateNotifier {
         this.world.setVisible(true);
     }
 
-    public MinesweeperView(PlayableMinesweeper gameModel) {
+    public MinesweeperView(PlayableMinesweeper gameModel)
+    {
         this();
         this.setGameModel(gameModel);
     }
