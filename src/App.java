@@ -14,6 +14,7 @@ public class App
         //Uncomment the lines below once your game model code is ready; don't forget to import your game model 
         PlayableMinesweeper model = new Minesweeper();
         view.setGameModel(model);
+        //blablla
 
 
 
