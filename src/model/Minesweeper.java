@@ -46,8 +46,7 @@ public class Minesweeper extends AbstractMineSweeper
     @Override
     public void startNewGame(int row, int col, int explosionCount)
     {
-        //deactivateFirstTileRule();
-        isFirsttile = true;
+        deactivateFirstTileRule();
 
         this.explosionsTotal= explosionCount;
         this.nrExplosions = 0;
@@ -59,7 +58,8 @@ public class Minesweeper extends AbstractMineSweeper
 
         }
         rd = new Random();
-        for (int i = 0; i < explosionsTotal; i++) {
+        for (int i = 0; i < explosionsTotal; i++)
+        {
 
                 int randomIndexRows = rd.nextInt(board.length);
                 int randomIndexColumns = rd.nextInt(board[0].length);
@@ -75,9 +75,6 @@ public class Minesweeper extends AbstractMineSweeper
                     board[randomIndexRows][randomIndexColumns].setIsExplosive(true);
                     nrExplosions= nrExplosions+ 1;
                 }
-
-
-
         }
         viewNotifier.notifyNewGame(row, col);
     }
@@ -155,6 +152,7 @@ public class Minesweeper extends AbstractMineSweeper
 
                     }
                 }
+                //else if it is still first one but not explosive
 
             }
             else
