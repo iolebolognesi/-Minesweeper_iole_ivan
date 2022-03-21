@@ -25,7 +25,8 @@ public class Minesweeper extends AbstractMineSweeper
     }
 
     @Override
-    public void startNewGame(Difficulty level) {
+    public void startNewGame(Difficulty level)
+    {
 
         if (level == Difficulty.EASY) {
             startNewGame(8,8,10);
@@ -43,8 +44,10 @@ public class Minesweeper extends AbstractMineSweeper
 
 
     @Override
-    public void startNewGame(int row, int col, int explosionCount) {
-        deactivateFirstTileRule();
+    public void startNewGame(int row, int col, int explosionCount)
+    {
+        //deactivateFirstTileRule();
+        isFirsttile = true;
 
         this.explosionsTotal= explosionCount;
         this.nrExplosions = 0;
@@ -130,19 +133,24 @@ public class Minesweeper extends AbstractMineSweeper
             if (isFirsttile)
             {
                 isFirsttile = false;
-                board[y][x].open();
 
-                if (board[y][x].getIsExplosive()) {
+
+                if (board[y][x].getIsExplosive())
+                {
                     board[y][x] = new EmptyTile();
+                    board[y][x].open();
                     board[y][x].setIsExplosive(false);
                     rd = new Random();
-                    while (!check) {
+                    while (!check)
+                    {
                         int randomIndexRows = rd.nextInt(board.length);
                         int randomIndexColumns = rd.nextInt(board[0].length);
-                        if (randomIndexRows != y && randomIndexColumns != x && !board[randomIndexRows][randomIndexColumns].isExplosive()) {
+                        if (randomIndexRows != y && randomIndexColumns != x && !board[randomIndexRows][randomIndexColumns].isExplosive())
+                        {
                             check = true;
                             board[randomIndexRows][randomIndexColumns] = new ExplosiveTile();
                             board[randomIndexRows][randomIndexColumns].setIsExplosive(true);
+
                         }
 
                     }
@@ -152,6 +160,11 @@ public class Minesweeper extends AbstractMineSweeper
             else
             {
                 board[y][x].open();
+                if(board[x][y].getIsExplosive())
+                {
+                    viewNotifier.notifyExploded(x,y);
+                    viewNotifier.notifyGameLost();
+                }
             }
 
 
@@ -172,13 +185,11 @@ public class Minesweeper extends AbstractMineSweeper
                     else{}
                 }
             }
-            viewNotifier.notifyOpened(x,y,counter);
 
-           if(board[x][y].getIsExplosive())
-            {
-                viewNotifier.notifyExploded(x,y);
-                viewNotifier.notifyGameLost();
-            }
+            viewNotifier.notifyOpened(y,x,counter);
+
+
+
 
         }
 
