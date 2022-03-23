@@ -213,21 +213,26 @@ public class Minesweeper extends AbstractMineSweeper
                 {
                     if(i>=0 && i< board[0].length && j>=0 && j<board.length)
                     {
-                        board[j][i].isOpened();
-                        board[j][i].open();
-                        viewNotifier.notifyOpened(i,j,countHelp(i,j));
+                       // board[j][i].isOpened();
+                        //board[j][i].open();
+                        //viewNotifier.notifyOpened(i,j,countHelp(i,j));
+                        if(!board[j][i].isOpened() )
+                        {
+                            open(i,j);
+                        }
+
+
                     }
                     else{}
-                }
+                  }
             }
-
         }
     }
 
 
     public int countHelp(int x,int y)
     {
-        int counter = 0;
+        int counter2 = 0;
 
             for (int i = x - 1; i <= x + 1; i++)
             {
@@ -237,7 +242,7 @@ public class Minesweeper extends AbstractMineSweeper
                     {
                         if (board[j][i].getIsExplosive())
                         {
-                            counter += 1;
+                            counter2 += 1;
                         }
                         else {}
 
@@ -245,7 +250,7 @@ public class Minesweeper extends AbstractMineSweeper
                     else {}
                 }
             }
-            return counter;
+            return counter2;
     }
 
     @Override
@@ -283,7 +288,7 @@ public class Minesweeper extends AbstractMineSweeper
             }
             else
             {
-                board[y][x].isOpened();
+                //board[y][x].isOpened();
                 board[y][x].open();
 
 
@@ -298,9 +303,14 @@ public class Minesweeper extends AbstractMineSweeper
                             if(i>=0 && i< board[0].length && j>=0 && j<board.length)
                             {
 
-                                board[j][i].isOpened();
-                                board[j][i].open();
-                                viewNotifier.notifyOpened(i,j,countHelp(i,j));
+                                //board[j][i].isOpened();
+                                //board[j][i].open();
+                                //viewNotifier.notifyOpened(i,j,countHelp(i,j));
+                                if(!board[j][i].isOpened())
+                                {
+                                    open(i,j);
+                                }
+
 
                             }
                             else{}
