@@ -4,17 +4,10 @@ import model.Difficulty;
 import model.PlayableMinesweeper;
 
 import javax.imageio.ImageIO;
-import javax.swing.ImageIcon;
-import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JMenu;
-import javax.swing.JMenuBar;
-import javax.swing.JMenuItem;
-import javax.swing.JPanel;
-import javax.swing.UIManager;
-import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.*;
 import javax.swing.plaf.DimensionUIResource;
 
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import java.io.File;
@@ -52,8 +45,26 @@ public class MinesweeperView implements IGameStateNotifier {
     private JPanel flagPanel = new JPanel();
     private JLabel timerView = new JLabel();
     private JLabel flagCountView = new JLabel();
+    private Timer timer; //make sure its the correct imported class
+    private int time;
+
 
     public MinesweeperView() {
+       timer = new Timer(1000, new ActionListener()
+       {
+           public void actionPerformed(ActionEvent a)
+           {
+               timerView.setText(String.valueOf(time));
+               time++;
+
+           }
+       });
+
+
+
+
+
+
         this.window = new JFrame("Minesweeper");
         timerPanel.setLayout(new FlowLayout());
         this.menuBar = new JMenuBar();
@@ -155,6 +166,9 @@ public class MinesweeperView implements IGameStateNotifier {
         this.flagCountView.setText("0");
         this.window.setSize(col * TILE_SIZE, row * TILE_SIZE + 30);
         this.world.removeAll();
+
+        time=0;
+        timer.start();
         
         this.tiles = new TileView[row][col];
         for (int i=0; i<row; ++i) {
@@ -187,6 +201,7 @@ public class MinesweeperView implements IGameStateNotifier {
     {
 
         this.removeAllTileEvents();
+        timer.stop();
         JLabel gameLost = new JLabel();
         gameLost.setText(" GAME LOST :( ");
         JFrame loserFrame = new JFrame();
@@ -194,12 +209,21 @@ public class MinesweeperView implements IGameStateNotifier {
         loserFrame.validate();
         loserFrame.setSize(100,100);
         loserFrame.setVisible(true);
+
         //throw new UnsupportedOperationException();
     }
     @Override
     public void notifyGameWon()
     {
         this.removeAllTileEvents();
+        timer.stop();
+        JLabel gameWon = new JLabel();
+        gameWon.setText(" GAME WON :) ");
+        JFrame loserFrame = new JFrame();
+        loserFrame.add(gameWon);
+        loserFrame.validate();
+        loserFrame.setSize(100,100);
+        loserFrame.setVisible(true);
         throw new UnsupportedOperationException();
     }
 
@@ -210,7 +234,8 @@ public class MinesweeperView implements IGameStateNotifier {
     }
 
     @Override
-    public void notifyFlagCountChanged(int newFlagCount) {
+    public void notifyFlagCountChanged(int newFlagCount)
+    {
         this.flagCountView.setText(Integer.toString(newFlagCount));
     }
 

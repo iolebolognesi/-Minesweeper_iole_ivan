@@ -10,6 +10,7 @@ public class Minesweeper extends AbstractMineSweeper
     protected int explosionsTotal;
     protected AbstractTile[][] board;
     protected Random rd;
+    protected int nrFlags;
 
 
 
@@ -44,7 +45,9 @@ public class Minesweeper extends AbstractMineSweeper
     @Override
     public void startNewGame(int row, int col, int explosionCount)
     {
+
         deactivateFirstTileRule();
+        this.nrFlags=0;
 
         this.explosionsTotal= explosionCount;
         this.nrExplosions = 0;
@@ -83,16 +86,22 @@ public class Minesweeper extends AbstractMineSweeper
     public void toggleFlag(int x, int y)
     {
 
+
         AbstractTile tile = board[y][x];
         if(tile.isFlagged())
         {
             tile.setIsFlagged(false);
+            this.nrFlags--;
+
             viewNotifier.notifyUnflagged(x,y);
+            viewNotifier.notifyFlagCountChanged(nrFlags);
         }
         else
         {
             tile.setIsFlagged(true);
+            this.nrFlags++;
             viewNotifier.notifyFlagged(x,y);
+            viewNotifier.notifyFlagCountChanged(nrFlags);
         }
 
 
@@ -299,6 +308,26 @@ public class Minesweeper extends AbstractMineSweeper
                     viewNotifier.notifyGameLost();
                 }
             }
+
+
+            // notify game won starts here
+            int countOpenCells =0;
+            for (int j = 0; j < board.length; j++)
+            {
+                for (int i = 0; i < board[0].length; i++)
+                {
+                    if(board[j][i].isOpened() || board[j][i].isFlagged())
+                    {
+                        countOpenCells = countOpenCells+1;
+                    }
+                    if(countOpenCells == board.length*board[0].length)
+                    {
+                        viewNotifier.notifyGameWon();
+                    }
+                }
+
+            }
+
         }
 
         else{}
