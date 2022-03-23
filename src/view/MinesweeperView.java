@@ -163,7 +163,23 @@ public class MinesweeperView implements IGameStateNotifier {
 
     @Override
     public void notifyNewGame(int row, int col) {
-        this.flagCountView.setText("0");
+
+        if(col==8)
+        {
+            this.flagCountView.setText("10");
+
+        }
+
+        else if (col ==16 )
+        {
+            this.flagCountView.setText("40");
+        }
+
+        else
+        {
+            this.flagCountView.setText("99");
+        }
+
         this.window.setSize(col * TILE_SIZE, row * TILE_SIZE + 30);
         this.world.removeAll();
 
@@ -209,7 +225,6 @@ public class MinesweeperView implements IGameStateNotifier {
         loserFrame.validate();
         loserFrame.setSize(100,100);
         loserFrame.setVisible(true);
-
         //throw new UnsupportedOperationException();
     }
     @Override
@@ -224,7 +239,7 @@ public class MinesweeperView implements IGameStateNotifier {
         loserFrame.validate();
         loserFrame.setSize(100,100);
         loserFrame.setVisible(true);
-        throw new UnsupportedOperationException();
+       // throw new UnsupportedOperationException();
     }
 
     private void removeAllTileEvents() {

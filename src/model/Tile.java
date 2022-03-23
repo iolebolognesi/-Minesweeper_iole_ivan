@@ -6,6 +6,7 @@ public class Tile extends AbstractTile
     protected boolean isExplosive;
     protected boolean isFlagged;
     protected boolean wasOpened;
+    
 
 
     public boolean getIsExplosive()
