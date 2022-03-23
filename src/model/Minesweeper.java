@@ -1,5 +1,6 @@
 package model;
 //import java.lang.reflect.Array;
+import java.awt.*;
 import java.util.Random;
 
 public class Minesweeper extends AbstractMineSweeper
@@ -36,14 +37,13 @@ public class Minesweeper extends AbstractMineSweeper
             startNewGame(16,30,99);
         }
 
-
-
     }
 
 
 
     @Override
-    public void startNewGame(int row, int col, int explosionCount) {
+    public void startNewGame(int row, int col, int explosionCount)
+    {
         deactivateFirstTileRule();
 
         this.explosionsTotal= explosionCount;
@@ -82,14 +82,17 @@ public class Minesweeper extends AbstractMineSweeper
     @Override
     public void toggleFlag(int x, int y)
     {
+
         AbstractTile tile = board[y][x];
         if(tile.isFlagged())
         {
             tile.setIsFlagged(false);
+            viewNotifier.notifyUnflagged(x,y);
         }
         else
         {
             tile.setIsFlagged(true);
+            viewNotifier.notifyFlagged(x,y);
         }
 
 
@@ -153,9 +156,9 @@ public class Minesweeper extends AbstractMineSweeper
         {
             for (int j = y-1; j <= y+1; j++)
             {
-                if(i>=0 && i< board.length && j>=0 && j<board[0].length)
+                if(i>=0 && i< board[0].length && j>=0 && j<board.length)
                 {
-                    if( board[i][j].getIsExplosive())
+                    if( board[j][i].getIsExplosive())
                     {
                         counter +=1;
                     }
@@ -166,16 +169,58 @@ public class Minesweeper extends AbstractMineSweeper
             }
         }
 
+
         board[y][x].isOpened();
         board[y][x].open();
-        viewNotifier.notifyOpened(y,x,counter);
+        viewNotifier.notifyOpened(x,y,counter);
+
+        if(counter==0)
+        {
+            for (int i = x-1; i <= x+1; i++)
+            {
+                for (int j = y-1; j <= y+1; j++)
+                {
+                    if(i>=0 && i< board[0].length && j>=0 && j<board.length)
+                    {
+                        board[j][i].isOpened();
+                        board[j][i].open();
+                        viewNotifier.notifyOpened(i,j,countHelp(i,j));
+                    }
+                    else{}
+                }
+            }
+
+        }
     }
 
 
+    public int countHelp(int x,int y)
+    {
+        int counter = 0;
+
+            for (int i = x - 1; i <= x + 1; i++)
+            {
+                for (int j = y - 1; j <= y + 1; j++)
+                {
+                    if (i>=0 && i< board[0].length && j>=0 && j<board.length)
+                    {
+                        if (board[j][i].getIsExplosive())
+                        {
+                            counter += 1;
+                        }
+                        else {}
+
+                    }
+                    else {}
+                }
+            }
+            return counter;
+    }
 
     @Override
     public void open(int x, int y)
     {
+
         if(x< board[0].length && y< board.length && x>=0 && y>=0)
         {
 
@@ -186,9 +231,9 @@ public class Minesweeper extends AbstractMineSweeper
             {
                 for (int j = y-1; j <= y+1; j++)
                 {
-                    if(i>=0 && i< board.length && j>=0 && j<board[0].length)
+                    if(i>=0 && i< board[0].length && j>=0 && j<board.length)
                     {
-                        if( board[i][j].getIsExplosive())
+                        if( board[j][i].getIsExplosive())
                         {
                             counter +=1;
                         }
@@ -203,24 +248,57 @@ public class Minesweeper extends AbstractMineSweeper
 
             if (isFirsttile)
             {
-                openFirstTile(y,x);
+                openFirstTile(x,y);
             }
-            else {
+            else
+            {
                 board[y][x].isOpened();
                 board[y][x].open();
 
 
                 viewNotifier.notifyOpened(x, y, counter);
 
-                if (board[x][y].getIsExplosive()) {
-                    viewNotifier.notifyExploded(x, y);
-                    viewNotifier.notifyGameLost();
+                if(counter==0)
+                {
+                    for (int i = x-1; i <= x+1; i++)
+                    {
+                        for (int j = y-1; j <= y+1; j++)
+                        {
+                            if(i>=0 && i< board[0].length && j>=0 && j<board.length)
+                            {
+
+                                board[j][i].isOpened();
+                                board[j][i].open();
+                                viewNotifier.notifyOpened(i,j,countHelp(i,j));
+                            }
+                            else{}
+                        }
+                    }
 
                 }
+
+                if (board[y][x].getIsExplosive())
+                {
+                    viewNotifier.notifyExploded(x, y);
+
+                    for (int j = 0; j < board.length; j++)
+                    {
+                        for (int i = 0; i < board[0].length; i++)
+                        {
+                            if(board[j][i].getIsExplosive())
+                            {
+                                board[j][i].isOpened();
+                                board[j][i].open();
+                                viewNotifier.notifyExploded(i, j);
+
+                            }
+                        }
+
+                    }
+
+                    viewNotifier.notifyGameLost();
+                }
             }
-
-
-
         }
 
         else{}
@@ -232,6 +310,7 @@ public class Minesweeper extends AbstractMineSweeper
     public void flag(int x, int y)
     {
       board[y][x].setIsFlagged(true);
+
     }
 
     @Override
