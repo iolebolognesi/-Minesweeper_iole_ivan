@@ -33,8 +33,8 @@ public class MinesweeperView implements IGameStateNotifier {
     public static final int MAX_TIME = 1;//in minutes
     public static final int TILE_SIZE = 50;
     public static final class AssetPath {
-        public static final String CLOCK_ICON = "./assets/icons/clock.png";
-        public static final String FLAG_ICON = "./assets/icons/flag.png";
+        public static final String CLOCK_ICON = "./src/clock_icon.png";
+        public static final String FLAG_ICON = "./src/BelgianFlag2png.png";
         public static final String BOMB_ICON = "./src/bomb3.png";
     }
 
@@ -183,12 +183,22 @@ public class MinesweeperView implements IGameStateNotifier {
         this.world.repaint();
     }
     @Override
-    public void notifyGameLost() {
+    public void notifyGameLost()
+    {
+
         this.removeAllTileEvents();
+        JLabel gameLost = new JLabel();
+        gameLost.setText(" GAME LOST :( ");
+        JFrame loserFrame = new JFrame();
+        loserFrame.add(gameLost);
+        loserFrame.validate();
+        loserFrame.setSize(100,100);
+        loserFrame.setVisible(true);
         //throw new UnsupportedOperationException();
     }
     @Override
-    public void notifyGameWon() {
+    public void notifyGameWon()
+    {
         this.removeAllTileEvents();
         throw new UnsupportedOperationException();
     }
@@ -212,7 +222,8 @@ public class MinesweeperView implements IGameStateNotifier {
     }
 
     @Override
-    public void notifyOpened(int x, int y, int explosiveNeighbourCount) {
+    public void notifyOpened(int x, int y, int explosiveNeighbourCount)
+    {
         this.tiles[y][x].notifyOpened(explosiveNeighbourCount);
     }
 
@@ -227,7 +238,8 @@ public class MinesweeperView implements IGameStateNotifier {
     }
 
     @Override
-    public void notifyExploded(int x, int y) {
+    public void notifyExploded(int x, int y)
+    {
         this.tiles[y][x].notifyExplode();
     }
 

@@ -29,29 +29,40 @@ public class TileView extends JButton implements ITileStateNotifier {
     }
 
     @Override
-    public void notifyFlagged() {
-        super.setIcon(flagIcon);
+    public void notifyFlagged()
+    {
+
+       super.setIcon(flagIcon);
+
+
     }
 
     @Override
-    public void notifyUnflagged() {
+    public void notifyUnflagged()
+    {
         super.setIcon(null);
+
+
     }
 
-    public void removalAllMouseListeners() {
+    public void removalAllMouseListeners()
+    {
         for (MouseListener listener : super.getMouseListeners()) 
             this.removeMouseListener(listener);    
     }
 
     @Override
-    public void notifyExplode() {
+    public void notifyExplode()
+    {
         super.setText("");
         super.setIcon(bombIcon);
         super.setEnabled(false);
     }
 
     @Override
-    public String toString(){
+    public String toString()
+    {
+
         return "["+Integer.toString(x)+","+Integer.toString(y)+"]";
     }
     
